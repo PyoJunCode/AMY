@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1068504631482",
+    "firebase_url": "https://hmct-db32a.firebaseio.com",
+    "project_id": "hmct-db32a",
+    "storage_bucket": "hmct-db32a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068504631482:android:072b48f3c7cbda3e",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068504631482-8h1ppe5n0p8d8dttibeatggpkk7i3vfk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_app",
+            "certificate_hash": "686eeb4ffb3f3b4d545711584a6adc1fbbb151b1"
+          }
+        },
+        {
+          "client_id": "1068504631482-mjeu4rsvh9jqv333gm1srlj1f9qvle0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOxlUnIMmDAj7VWUCCoGq01p1YrK4imqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068504631482-mjeu4rsvh9jqv333gm1srlj1f9qvle0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
