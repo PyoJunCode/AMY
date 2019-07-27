@@ -31,7 +31,7 @@ class _frontPageState extends State<frontPage> {
     pages = [
       matchPage(widget.user),
       messageAll(),
-      myInfoPage(),
+      myInfoPage(widget.user),
 
     ];
   }
@@ -57,36 +57,5 @@ class _frontPageState extends State<frontPage> {
     });
   }
 
-  buildAppBar() {
-
-    return AppBar(
-        centerTitle: true,
-        title: Text('Han Man Chu~🥰', style: TextStyle(color: Colors.white)),
-
-
-    actions: <Widget>[
-        PopupMenuButton<String>(
-          onSelected: menuChoise,
-          itemBuilder: (BuildContext context) {
-            return menuConsts.choices.map((String choice) {
-              return PopupMenuItem<String>(
-                value: choice,
-                child: Text(choice, style: TextStyle(color: Colors.deepPurpleAccent),),
-              );
-            }).toList();
-          },
-          icon: Icon(Icons.library_add, color: Colors.black,),
-          offset: Offset(0,40),
-
-        )
-    ],
-    );
-  }
-
-   menuChoise(String choise) {
-    if(choise == menuConsts.major){
-
-    }
-  }
 
 }

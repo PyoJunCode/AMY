@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'detail.dart';
 import 'menuConsts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/login.dart';
@@ -18,9 +19,7 @@ class matchPage extends StatefulWidget {
 
 class _matchState extends State<matchPage> {
   int menu_select = 0;
-
-
-
+  static int clicked = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,6 @@ class _matchState extends State<matchPage> {
     return AppBar(
       centerTitle: true,
       title: Text('Han Man Chu~🥰', style: TextStyle(color: Colors.white)),
-
 
       actions: <Widget>[
         PopupMenuButton<String>(
@@ -99,23 +97,17 @@ class _matchState extends State<matchPage> {
 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
 
-                  Container(
-                    child : Flexible(
-                      fit: FlexFit.loose,
-                      child : IconButton(icon: Icon(Icons.arrow_left, size: 50,)),
-                    ),
-                  ),
 
-
+                  Padding(padding: EdgeInsets.all(10),),
 
                   Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
 
                       children: <Widget>[
@@ -125,8 +117,9 @@ class _matchState extends State<matchPage> {
                         Padding(padding: EdgeInsets.all(8)),
                         SizedBox(
 
-                          width: 200,
+                          width: 250,
                           child: Card(
+
                             child: Column(
                               children: <Widget>[
                                 SizedBox(
@@ -134,19 +127,21 @@ class _matchState extends State<matchPage> {
                                     height: 180,
                                     child: Image.network(url)
                                 ),
-                                Text('이름 : Ghost', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(clicked.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
                                 Text('학부 : Ghost'),
                                 Padding(padding: EdgeInsets.all(8)),
                                 Container(
                                   child: Column(
                                     children: <Widget> [
-                                      IconButton(icon: Icon(Icons.send,
-                                        size: 40,
-                                      ),
-                                        onPressed: () {
-                                        sendM(context);
-                                        },
-                                      ),
+                                        IconButton(icon: Icon(Icons.send,
+                                          size: 40,
+                                        ),
+                                          onPressed: () {
+                                          //sendM(context);
+
+
+                                          },
+                                        ),
 
                                       Text('친해져요!'),
                                     ], //column widget
@@ -165,14 +160,15 @@ class _matchState extends State<matchPage> {
 
                       child: Flexible(
                           fit: FlexFit.loose,
-                          child: IconButton(icon: Icon(Icons.arrow_right, size: 50,)),
+                          child: IconButton(icon: Icon(Icons.navigate_next, size: 60,),
+                            onPressed: () {
+                            clicked ++;
+                            buildBody();
+                            },),
 
                       )
 
                   ),
-
-
-
 
                 ],
 
