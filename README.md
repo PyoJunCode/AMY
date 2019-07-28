@@ -42,6 +42,29 @@ firebase database는 전체 데이터 개수를 세지 않기때문에 알려면
 
 ex) 랜덤으로 불러오기위해 전체 유저수를 알아야할때 : 유저를 추가할때마다 usercount라는 데이터에 1씩 더해주는 방식
 
+**데이터 가져오는것도 streambuilder의 스냅샷을 이용하면 된다. ex)**
+
+  ```
+  return new StreamBuilder<QuerySnapshot>(
+  stream: Firestore.instance.collection('hakbun').snapshots(), // hakbun 폴더 가져오기
+  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    if (!snapshot.hasData) returnCenter(child: CircularProgressIndicator(),); //데이터없으면 로딩
+    
+    //implement code here :
+    
+    return  ListView(  //이 예제는 그냥 데이터 가져와서 리스트뷰만드는 코드
+      children: snapshot.data.documents.map((DocumentSnapshot document) {
+        return  ListTile(
+          title:  Text(document['name']),
+          subtitle:  Text(document['phone']),
+        );
+      }).toList(),
+    );
+  },
+);
+  ```
+
+특정값을 가져와서 사용하고싶으면 일단 List나 Map에 넣은 후 사용해야함.
 
 # 이미지
 
@@ -53,7 +76,7 @@ ex) 랜덤으로 불러오기위해 전체 유저수를 알아야할때 : 유저
       stream: Firestore.instance.collection('profile').snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if(!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator(),);
+          return Center(child: CircularProgressIndicator(),); //데이터없으면 로딩
         }
 
         var items = snapshot.data?.documents ?? [] ; //documnets is list
