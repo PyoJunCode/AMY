@@ -143,7 +143,7 @@ class _myInfoPageState extends State<myInfoPage> {
                     onPressed: () {
                       final firebaseDataRef = FirebaseDatabase.instance.reference();
 
-                      firebaseDataRef.child(hakbun).update({
+                      firebaseDataRef.push().child('update').update({
                         'email': widget.user.email,
                         'gender': 'female1',
                         'hakbun': hakbun,
