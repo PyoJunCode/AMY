@@ -13,7 +13,7 @@ final QuerySnapshot result = await Firestore.instance
 final List<DocumentSnapshot> documents = result.documents;
 
 if(documents.length == 0){ // 길이가 0이면 기본세팅
-Firestore.instance.collection('users').document(user.uid).setData({
+Firestore.instance.collection('users').document(user.uid).setData({ //documnet(문서이름)
 'hakbun' : user.email.split('@')[0],
 'name' : user.displayName
 });
