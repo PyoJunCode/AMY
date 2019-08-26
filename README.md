@@ -10,6 +10,9 @@ final QuerySnapshot result = await Firestore.instance
 .collection('users')
 .where('id', isEqualTo: user.uid)
 .getDocuments();
+
+// 위의 내용이 users라는 collection에서 id 카테고리에 user.uid를 불러오는것
+
 final List<DocumentSnapshot> documents = result.documents;
 
 if(documents.length == 0){ // 길이가 0이면 기본세팅

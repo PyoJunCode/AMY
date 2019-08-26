@@ -30,7 +30,7 @@ class _frontPageState extends State<frontPage> {
     super.initState();
     pages = [
       matchPage(widget.user),
-      messageAll(),
+      TodoList(),
       myInfoPage(widget.user),
 
     ];
