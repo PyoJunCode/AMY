@@ -25,10 +25,6 @@ database가 아닌 cloud firebase(사진업로드할 때 썻던것)를 통합해
 
 
   
-  
-여기 참고하면 자세히 알 수 있음.
-https://firebase.google.com/docs/database/admin/save-data
-
 
 유의점 :
 
