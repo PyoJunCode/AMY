@@ -4,12 +4,22 @@ gbc project
 
 # database 정리
 
-database가 아닌 cloud firebase(사진업로드할 때 썻던것)를 통합해서 이용하기로함.
+final QuerySnapshot result = await Firestore.instance
+.collection('users')
+.where('id', isEqualTo: user.uid)
+.getDocuments();
+final List<DocumentSnapshot> documents = result.documents;
 
+if(documents.length == 0){ // 길이가 0이면 기본세팅
 Firestore.instance.collection('users').document(user.uid).setData({
 'hakbun' : user.email.split('@')[0],
 'name' : user.displayName
 });
+
+
+database가 아닌 cloud firebase(사진업로드할 때 썻던것)를 통합해서 이용하기로함.
+
+
 
 
   
@@ -45,8 +55,9 @@ ex) 랜덤으로 불러오기위해 전체 유저수를 알아야할때 : 유저
   },
 );
   ```
+=======
+>>>>>>> a8113126b984d7201fd33b4f9caf8816bb653859
 
-특정값을 가져와서 사용하고싶으면 일단 List나 Map에 넣은 후 사용해야함.
 
 # 이미지
 
