@@ -145,7 +145,7 @@ class _myInfoPageState extends State<myInfoPage> {
                     onPressed: () {
                       final firebaseDataRef = FirebaseDatabase.instance.reference();
 
-                      Firestore.instance.collection('users').document('1000000').updateData({
+                      Firestore.instance.collection('users').document(widget.user.uid).updateData({
                         'hakbun' : 'update',
                         'name' : 'update2'
                       });

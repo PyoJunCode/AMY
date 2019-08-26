@@ -21,6 +21,9 @@ Firestore.instance.collection('users').document(user.uid).setData({ //documnet(�
 'name' : user.displayName
 });
  ```
+ collection(폴더명) , documnet( 파일명) 여기서 파일명은 기본적으로 학번으로 한다. ==> 학번 추출방법 : 로그인처럼 user를 전달받고
+user.email.split('@')[0] 을 쓰면 학번
+
 데이터 업데이트
 
   ```
