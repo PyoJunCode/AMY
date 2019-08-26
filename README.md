@@ -27,7 +27,7 @@ user.email.split('@')[0] 을 쓰면 학번
 데이터 업데이트
 
   ```
-  Firestore.instance.collection('users').document('1000000').setData({
+  Firestore.instance.collection('users').document('1000000').updateData({
                           'hakbun' : 'working',
                           'name' : 'working'
                         });

@@ -53,7 +53,7 @@ class checkPage extends StatelessWidget {
             ),
             RaisedButton(onPressed: (){
 
-              //checkAuth();
+              checkAuth();
 
               Navigator.push(context, MaterialPageRoute(
                     builder: (context) => frontPage(user)));
@@ -86,18 +86,23 @@ class checkPage extends StatelessWidget {
   }
 
   Future<Null> checkAuth() async {
-    print('new auth');
+
     if(user != null){ //처음오는게 아니면 documents로 가져온다.
+
       final QuerySnapshot result = await Firestore.instance
           .collection('users')
-          .where('id', isEqualTo: user.uid)
+          .where(user.email.split('@')[0])
           .getDocuments();
       final List<DocumentSnapshot> documents = result.documents;
 
-      if(documents.length == 0){ // 길이가 0이면 기본세팅
-        Firestore.instance.collection('users').document(user.uid).setData({
+
+      if(documents.length == 0){
+        print('new auth');
+        print('setData');// 길이가 0이면 기본세팅
+        Firestore.instance.collection('users').document(user.email.split('@')[0]).setData({
           'hakbun' : user.email.split('@')[0],
-          'name' : user.displayName
+          'name' : user.displayName,
+          'gender' : 'male'
         });
 
         first = false;
