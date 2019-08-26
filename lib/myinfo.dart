@@ -145,7 +145,7 @@ class _myInfoPageState extends State<myInfoPage> {
 
                       firebaseDataRef.push().child('update').update({
                         'email': widget.user.email,
-                        'gender': 'female1',
+                        'gender': 'femal?',
                         'hakbun': hakbun,
                         'name': widget.user.displayName
                       });

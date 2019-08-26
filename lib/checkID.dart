@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'auth.dart';
+import 'auth1.dart';
 import 'front.dart';
 import 'login.dart';
 
@@ -10,6 +13,7 @@ class checkPage extends StatelessWidget {
 
   final FirebaseUser user;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  bool first = true;
 
   checkPage(this.user);
 
@@ -48,9 +52,22 @@ class checkPage extends StatelessWidget {
               ),
             ),
             RaisedButton(onPressed: (){
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) => frontPage(user)));
-            }, color: const Color(0xFFffdbf8),
+
+              //checkAuth();
+
+              Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => frontPage(user)));
+
+//              if(first == false) {
+//                Navigator.pushReplacement(context, MaterialPageRoute(
+//                    builder: (context) => frontPage(user)));
+//              }else{
+//                Navigator.pushReplacement(context, MaterialPageRoute(
+//                    builder: (context) => MyApp(user)));
+//              }
+
+
+              }, color: const Color(0xFFffdbf8),
                child: Text('입장하기'),
             ),
             RaisedButton(onPressed: () {
@@ -66,5 +83,32 @@ class checkPage extends StatelessWidget {
         ),
       ),)
     );
+  }
+
+  Future<Null> checkAuth() async {
+    print('new auth');
+    if(user != null){ //처음오는게 아니면 documents로 가져온다.
+      final QuerySnapshot result = await Firestore.instance
+          .collection('users')
+          .where('id', isEqualTo: user.uid)
+          .getDocuments();
+      final List<DocumentSnapshot> documents = result.documents;
+
+      if(documents.length == 0){ // 길이가 0이면 기본세팅
+        Firestore.instance.collection('users').document(user.uid).setData({
+          'hakbun' : user.email.split('@')[0],
+          'name' : user.displayName
+        });
+
+        first = false;
+      }
+    first = false;
+
+    }
+
+    else first = true;
+
+
+
   }
 }
