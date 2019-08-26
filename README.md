@@ -4,6 +4,7 @@ gbc project
 
 # database 정리
 
+ ```
 final QuerySnapshot result = await Firestore.instance
 .collection('users')
 .where('id', isEqualTo: user.uid)
@@ -15,6 +16,7 @@ Firestore.instance.collection('users').document(user.uid).setData({
 'hakbun' : user.email.split('@')[0],
 'name' : user.displayName
 });
+ ```
 
 
 database가 아닌 cloud firebase(사진업로드할 때 썻던것)를 통합해서 이용하기로함.
