@@ -53,7 +53,7 @@ class _uploadtestState extends State<uploadtest> {
 
     return StreamBuilder(
 
-      stream: Firestore.instance.collection('profile').snapshots(),
+      stream: Firestore.instance.collection('users').snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if(!snapshot.hasData) {
           return Center(child: CircularProgressIndicator(),);
@@ -61,7 +61,7 @@ class _uploadtestState extends State<uploadtest> {
 
         var items = snapshot.data?.documents ?? [] ; //documnets is list
 
-          return _buildListItem(context, items[7]); //one of the List
+          return Text(snapshot.data.documents[1]['name']); //one of the List
 
 
 //        return GridView.builder(

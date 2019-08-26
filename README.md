@@ -4,24 +4,54 @@ gbc project
 
 # database 정리
 
-데이터 추가
+데이터 불러오기
+
+1.
+
  ```
 final QuerySnapshot result = await Firestore.instance
 .collection('users')
 .where('id', isEqualTo: user.uid)
 .getDocuments();
 
-// 위의 내용이 users라는 collection에서 id 카테고리에 user.uid를 불러오는것
-
 final List<DocumentSnapshot> documents = result.documents;
 
-if(documents.length == 0){ // 길이가 0이면 기본세팅
+ ```
+ 
+ 2.
+ 
+  ```
+ 
+ StreamBuilder(
+ 
+ stream: Firestore.instance.collection('users').snapshots(),
+ builder: (BuildContext context, AsyncSnapshot snapshot) {
+ if(!snapshot.hasData) {
+ return Center(child: CircularProgressIndicator(),);
+ } //로딩
+ 
+ return Text(snapshot.data.documents[1]['name']); //가져온 user도큐먼트 1번째의 name출력
+ 
+ },
+ );
+ 
+  ```
+ 
+2번을 추천
+
+데이터 추가하기
+
+
+ ```
+
+
 Firestore.instance.collection('users').document(user.uid).setData({ //documnet(문서이름)
 'hakbun' : user.email.split('@')[0],
 'name' : user.displayName
-});
+
  ```
- collection(폴더명) , documnet( 파일명) 여기서 파일명은 기본적으로 학번으로 한다. ==> 학번 추출방법 : 로그인처럼 user를 전달받고
+collection(폴더명) , documnet( 파일명) 여기서 파일명은 기본적으로 학번으로 한다. ==> 학번 추출방법 : 로그인처럼 user를 전달받고
+
 user.email.split('@')[0] 을 쓰면 학번
 
 데이터 업데이트

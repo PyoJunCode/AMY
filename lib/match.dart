@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'detail.dart';
@@ -125,7 +126,8 @@ class _matchState extends State<matchPage> {
                                 SizedBox(
                                     width: 180,
                                     height: 180,
-                                    child: Image.network(url)
+                                    child: Text('load')//Image.network(url)
+
                                 ),
                                 Text(clicked.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
                                 Text('학부 : Ghost'),
