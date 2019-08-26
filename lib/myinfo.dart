@@ -18,13 +18,15 @@ class myInfoPage extends StatefulWidget {
   myInfoPage(this.user);
 
 
-
-
   @override
   _myInfoPageState createState() => _myInfoPageState();
 }
 
 class _myInfoPageState extends State<myInfoPage> {
+
+
+
+
   final textEditingController = TextEditingController();
 
   File imageFile; //image file
@@ -143,12 +145,15 @@ class _myInfoPageState extends State<myInfoPage> {
                     onPressed: () {
                       final firebaseDataRef = FirebaseDatabase.instance.reference();
 
-                      firebaseDataRef.push().child('update').update({
-                        'email': widget.user.email,
-                        'gender': 'femal?',
-                        'hakbun': hakbun,
-                        'name': widget.user.displayName
+                      Firestore.instance.collection('users').document('1000000').updateData({
+                        'hakbun' : 'update',
+                        'name' : 'update2'
                       });
+//
+//                      Firestore.instance.collection('users').document('1000000').setData({
+//                        'hakbun' : 'working',
+//                        'name' : 'working'
+//                      });
 
 
 

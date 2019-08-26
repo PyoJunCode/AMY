@@ -4,6 +4,7 @@ gbc project
 
 # database 정리
 
+데이터 추가
  ```
 final QuerySnapshot result = await Firestore.instance
 .collection('users')
@@ -17,6 +18,16 @@ Firestore.instance.collection('users').document(user.uid).setData({
 'name' : user.displayName
 });
  ```
+데이터 업데이트
+
+  ```
+  Firestore.instance.collection('users').document('1000000').setData({
+                          'hakbun' : 'working',
+                          'name' : 'working'
+                        });
+ ```
+ 
+ 
 
 
 database가 아닌 cloud firebase(사진업로드할 때 썻던것)를 통합해서 이용하기로함.
