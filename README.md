@@ -29,7 +29,7 @@ final List<DocumentSnapshot> documents = result.documents;
  *데이터 저장 형식*
  유저정보 :
  
- ![img](/Users/seojunpyo/Documents/image/userDatabase)
+ ![img](https://user-images.githubusercontent.com/47979730/63790788-01134300-c935-11e9-9802-fab0697b2ddd.png)
  
  2.
  
