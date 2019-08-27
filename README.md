@@ -11,7 +11,7 @@ gbc project
  ```
 final QuerySnapshot result = await Firestore.instance
 .collection('users')
-.where('id', isEqualTo: user.uid)
+.where('id', isEqualTo: user.uid) // 2번에도 적용가능. where 으로 특정 필드값에 만족하는 항목 가져올수있음.
 .getDocuments();
 
 final List<DocumentSnapshot> documents = result.documents;
