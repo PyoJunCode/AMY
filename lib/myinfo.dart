@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'auth1.dart';
+
 
 class myInfoPage extends StatefulWidget {
 
@@ -112,10 +114,10 @@ class _myInfoPageState extends State<myInfoPage> {
                             var doc = Firestore.instance.collection('profile').document();
                             doc.setData({
                               'id' : doc.documentID,
-                              'userID' : widget.user.email,
+                              'hakbun' : widget.user.email.split('@')[0],
                               'photoURL' : uri.toString(),
                               'contents' : textEditingController.text,
-                              'email' : widget.user.displayName,
+                              'name' : widget.user.displayName,
                               'userPhoto' : widget.user.photoUrl
                             }).then((onValue) {
                               Navigator.pushReplacement(context, MaterialPageRoute(
@@ -133,7 +135,7 @@ class _myInfoPageState extends State<myInfoPage> {
                   child: IconButton(icon: Icon(Icons.file_download, size: 40),
                     onPressed: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder:  (context) => uploadtest(widget.user)));
+                          builder:  (context) => authTest(widget.user)));
                     },
 
                   ),

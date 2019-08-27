@@ -126,10 +126,10 @@ class _matchState extends State<matchPage> {
                                 SizedBox(
                                     width: 180,
                                     height: 180,
-                                    child: Text('load')//Image.network(url)
+                                    child: Text('loading')//Image.network(url)
 
                                 ),
-                                Text(clicked.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('이름 : '),
                                 Text('학부 : Ghost'),
                                 Padding(padding: EdgeInsets.all(8)),
                                 Container(
@@ -145,7 +145,7 @@ class _matchState extends State<matchPage> {
                                           },
                                         ),
 
-                                      Text('친해져요!'),
+                                      Text('상세정보'),
                                     ], //column widget
                                   ),
                                 ),

@@ -4,7 +4,9 @@ gbc project
 
 # database 정리
 
-데이터 불러오기
+*데이터 불러오기*
+
+
 
 1.
 
@@ -17,6 +19,17 @@ final QuerySnapshot result = await Firestore.instance
 final List<DocumentSnapshot> documents = result.documents;
 
  ```
+ 
+ 만약 gender가 male인 document들만 불러오고 싶다? 그럼
+ 
+ ...where('gender' isEqualTo: 'male')... 으로 불러와서 documents[index]['name'] 이런식으로 필요한 정보 빼서 쓰면 됨.
+ 
+ 하지만 총 남자수는 계산 안해주므로 파이어 베이스에 따로 숫자카운트해서 저장해놓은거 불러와야 할듯.
+ 
+ *데이터 저장 형식*
+ 유저정보 :
+ 
+ ![img](/Users/seojunpyo/Documents/image/userDatabase)
  
  2.
  
@@ -37,7 +50,7 @@ final List<DocumentSnapshot> documents = result.documents;
  
   ```
  
-2번을 추천
+실시간 변동이 있을 때에는 2번을 추천
 
 데이터 추가하기
 
@@ -52,7 +65,9 @@ Firestore.instance.collection('users').document(user.uid).setData({ //documnet(�
  ```
 collection(폴더명) , documnet( 파일명) 여기서 파일명은 기본적으로 학번으로 한다. ==> 학번 추출방법 : 로그인처럼 user를 전달받고
 
-user.email.split('@')[0] 을 쓰면 학번
+user.email.split('@')[0] 을 쓰면 학번짜를 수 있음.
+
+statueful 화면이라면 widget.user.email ...으로 써야함
 
 데이터 업데이트
 

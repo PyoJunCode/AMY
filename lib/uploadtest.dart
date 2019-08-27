@@ -53,7 +53,7 @@ class _uploadtestState extends State<uploadtest> {
 
     return StreamBuilder(
 
-      stream: Firestore.instance.collection('users').snapshots(),
+      stream: Firestore.instance.collection('profile').where('hakbun', isEqualTo: '21800370').snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if(!snapshot.hasData) {
           return Center(child: CircularProgressIndicator(),);
@@ -61,7 +61,11 @@ class _uploadtestState extends State<uploadtest> {
 
         var items = snapshot.data?.documents ?? [] ; //documnets is list
 
-          return Text(snapshot.data.documents[1]['name']); //one of the List
+        return
+          Image.network(
+          items[0]['photoURL'],
+          fit: BoxFit.cover,
+        ); //one of the List
 
 
 //        return GridView.builder(
