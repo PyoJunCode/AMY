@@ -4,7 +4,7 @@ gbc project
 
 # database 정리
 
-*데이터 불러오기*
+**데이터 불러오기**
 
 
 
@@ -26,7 +26,8 @@ final List<DocumentSnapshot> documents = result.documents;
  
  하지만 총 남자수는 계산 안해주므로 파이어 베이스에 따로 숫자카운트해서 저장해놓은거 불러와야 할듯.
  
- *데이터 저장 형식*
+ **데이터 저장 형식**
+ 
  유저정보 :
  
  ![img](https://user-images.githubusercontent.com/47979730/63790788-01134300-c935-11e9-9802-fab0697b2ddd.png)
