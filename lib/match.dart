@@ -20,8 +20,9 @@ class matchPage extends StatefulWidget {
 
 class _matchState extends State<matchPage> {
   int menu_select = 0;
-  static int clicked = 0;
 
+  int randomUser = 0;
+  int randomHakbun = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +38,13 @@ class _matchState extends State<matchPage> {
       menu_select = menu_index;
     });
   }
+
+  void getRandomUser(){
+
+  }
+
+
+
 
   buildAppBar() {
 
@@ -70,7 +78,9 @@ class _matchState extends State<matchPage> {
   }
 
   buildBody() {
+
     String url = 'http://support.handong.edu/photo/217/21700566.jpg';
+
     Random rnd;
     int min = 000;
     int max = 800;
@@ -126,7 +136,32 @@ class _matchState extends State<matchPage> {
                                 SizedBox(
                                     width: 180,
                                     height: 180,
-                                    child: Text('loading')//Image.network(url)
+                                    child:  StreamBuilder(
+
+                            stream: Firestore.instance.collection('profile').where('hakbun', isEqualTo: widget.user.email.split('@')[0]).snapshots(),
+                            builder: (BuildContext context, AsyncSnapshot snapshot) {
+                              if(!snapshot.hasData) {
+                                return Center(child: CircularProgressIndicator(),);
+                              }
+
+                              var items = snapshot.data?.documents ?? [] ; //documnets is list
+
+                              return
+                                Image.network(
+                                  items[0]['photoURL'],
+                                  fit: BoxFit.cover,
+                                ); //one of the List
+
+
+//        return GridView.builder(
+//            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                crossAxisCount: 5),
+//            itemCount: items.length,
+//            itemBuilder: (context, index){
+//              return _buildListItem(context, items[index]);
+//            } );
+                            },
+                          );//Image.network(url)
 
                                 ),
                                 Text('이름 : '),

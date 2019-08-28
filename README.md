@@ -116,8 +116,6 @@ ex) 랜덤으로 불러오기위해 전체 유저수를 알아야할때 : 유저
   },
 );
   ```
-=======
->>>>>>> a8113126b984d7201fd33b4f9caf8816bb653859
 
 
 # 이미지
@@ -143,19 +141,25 @@ ex) 랜덤으로 불러오기위해 전체 유저수를 알아야할때 : 유저
   올린 사진 하나(profile 폴더의 3번째사진) 불러오기예제.  streamBuilder로 실시간 업데이트.
   
   ![img](https://postfiles.pstatic.net/MjAxOTA3MjlfOTYg/MDAxNTY0MzQ2NzI3MDMw.NrazE_dq3vUSqLBx2tOajTk1cEOlJUfZ1P3XRWB5y88g.mUU2E1_uLOYrv5I7RKLI-rgV2ew9Nu47DTITZzDwb5sg.PNG.potenpanda/SE-acfc9b08-56f2-4c7e-99f7-a95bef2ddc56.png?type=w773)
+  
+  
+  
+  
+  
+  # 개발로그
+  
+  8/28일부터 기록
+  
+  8/28
+  To do:
+  -구글 로그인 시 회원정보 존재하는지 체크 -> 다음화면 결정
+  -회원가입 폼에 필수입력 정보를 정하고 미입력시 가입하기 불가로
+  -회원 사진 여러장 업로드 가능 (사실상 스터디 앱 만드는데 필요 없을듯 보류.)
+  
+  
+  Done:
+  -회원가입 페이지 사진 등록 구현
+  -회원가입 페이지 유저 정보 데이터베이스 업로드 구현
+  
 
                       
-                      
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
