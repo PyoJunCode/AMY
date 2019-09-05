@@ -11,21 +11,21 @@ import 'match.dart';
 
 //회원가입
 
-class authTest extends StatefulWidget {
+class modify extends StatefulWidget {
 
 
   final FirebaseUser user;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  authTest(this.user);
+  modify(this.user);
 
 
 
   @override
-  _authTestState createState() => _authTestState();
+  _modifyState createState() => _modifyState();
 }
 
-class _authTestState extends State<authTest> {
+class _modifyState extends State<modify> {
 
 
 
@@ -60,6 +60,33 @@ class _authTestState extends State<authTest> {
   String kakaoid1 = null;
 
   File imageFile;
+
+
+
+  loadImg() {
+    return StreamBuilder(
+      stream: Firestore.instance.collection('profile').where('hakbun', isEqualTo: widget.user.email.split('@')[0]).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if(!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+
+        var items = snapshot.data?.documents ?? [] ; //documnets is list
+
+
+        print(items.length);
+
+
+        return
+          Image.network(
+            items[0]['photoURL'],
+            fit: BoxFit.cover,
+          ); //one of the List
+
+
+      },
+    );
+  }
 
   void getImg() async{
     /*var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -1136,6 +1163,7 @@ class _authTestState extends State<authTest> {
 
   @override
   Widget build(BuildContext context) {
+    loadImg();
     loadGender();
     loadHakbu();
     loadAge();
@@ -1151,7 +1179,7 @@ class _authTestState extends State<authTest> {
 
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('회원가입',
+          title: new Text('정보수정',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.grey,
@@ -1541,7 +1569,7 @@ class _authTestState extends State<authTest> {
                                   iconSize: 90.0,
                                 ),
                                 Text(
-                                  '가입',
+                                  '완료',
                                   style: TextStyle(
                                       fontSize:17.0,
                                       color: Colors.white,
@@ -1573,7 +1601,7 @@ class _authTestState extends State<authTest> {
           SizedBox(
             width: 120.0,
             height: 120.0,
-            child:  imageFile == null? CircleAvatar(backgroundImage : NetworkImage('http://hicomputing.org/modules/board/skins/WhiteBoard/imgs/no_image.png')) : Image.file(imageFile),
+            child:  imageFile == null? loadImg() : Image.file(imageFile),
 
           ),
           Container(

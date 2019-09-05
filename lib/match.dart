@@ -6,6 +6,7 @@ import 'menuConsts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/login.dart';
 
+//매칭페이지. 상대찾는 메인 페이지. 랜덤으로 사람 보여주는거
 
 class matchPage extends StatefulWidget {
 
@@ -19,17 +20,29 @@ class matchPage extends StatefulWidget {
 }
 
 class _matchState extends State<matchPage> {
-  int menu_select = 0;
 
-  int randomUser = 0;
-  int randomHakbun = 0;
+  int menu_select = 0;
+  String userGender = '남자';
+  String oppoGender = 'null';
+
+
+  String oppoHakbun = 'null';
+  String oppoName = 'null';
+  String oppoMajor = 'null';
+  String oppoAge = 'null';
+
+  int oppoGenderCount ;
+  int randomUser ;
+  int randomHakbun  ;
+  int randomNum ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: buildAppBar(),
+      //appBar: buildAppBar(),
+      backgroundColor: const Color(0xFFfff8fb),
+      //backgroundColor: const Color(0xFFffe6f1),
       body: buildBody(),
-
     );
   }
 
@@ -44,13 +57,10 @@ class _matchState extends State<matchPage> {
   }
 
 
-
-
-  buildAppBar() {
-
+  /*buildAppBar() {
     return AppBar(
       centerTitle: true,
-      title: Text('Han Man Chu~🥰', style: TextStyle(color: Colors.white)),
+      title: Text('한만추', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey)),
 
       actions: <Widget>[
         PopupMenuButton<String>(
@@ -59,17 +69,16 @@ class _matchState extends State<matchPage> {
             return menuConsts.choices.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
-                child: Text(choice, style: TextStyle(color: Colors.deepPurpleAccent),),
+                child: Text(choice, style: TextStyle(color: Colors.pinkAccent),),
               );
             }).toList();
           },
           icon: Icon(Icons.library_add, color: Colors.black,),
           offset: Offset(0,40),
-
         )
       ],
     );
-  }
+  }*/
 
   menuChoise(String choise) {
     if(choise == menuConsts.major){
@@ -77,146 +86,196 @@ class _matchState extends State<matchPage> {
     }
   }
 
+  getUserInfo (FirebaseUser user ) async {
+
+    final QuerySnapshot result = await Firestore.instance
+        .collection('users')
+        .where('hakbun', isEqualTo: user.email.split('@')[0]) // 2번에도 적용가능. where 으로 특정 필드값에 만족하는 항목 가져올수있음.
+        .getDocuments();
+
+    final List<DocumentSnapshot> documents = result.documents;
+
+    userGender = documents[0]['gender'];
+    print('user Gender is ' + userGender);
+
+
+  }
+
+  getoppoUserCount(String oppoGender) async {
+
+    var respectsQuery = await Firestore.instance
+        .collection('users')
+        .where('gender', isEqualTo: oppoGender);
+    var querySnapshot = await respectsQuery.getDocuments();
+    var totalEquals = querySnapshot.documents.length;
+
+    oppoGenderCount = totalEquals;
+
+    randomNum = Random().nextInt(oppoGenderCount);
+
+    return totalEquals as int;
+
+  }
+
+  getRandomHakbun(String oppoGender, int rand)  async {
+
+    var respectsQuery = await Firestore.instance
+        .collection('users')
+        .where('gender', isEqualTo: oppoGender);
+    var list = await respectsQuery.getDocuments();
+
+    setState(() {
+      oppoHakbun = list.documents[rand]['hakbun'].toString();
+    });
+
+    oppoName = list.documents[rand]['name'].toString();
+    oppoMajor = list.documents[rand]['major'].toString();
+    oppoAge = list.documents[rand]['age'].toString();
+
+
+
+    return list.documents;
+
+
+  }
+
   buildBody() {
 
-    String url = 'http://support.handong.edu/photo/217/21700566.jpg';
+    getUserInfo(widget.user); // set userGender
 
-    Random rnd;
-    int min = 000;
-    int max = 800;
-    rnd = new Random();
-    int r = min + rnd.nextInt(max-min);
-
-    String stunum = r.toString();
-
-    if(stunum.length == 2) stunum = '0' + stunum;
-    else if(stunum.length == 1) stunum = '00' + stunum;
+    oppoGender = userGender == '남자'? '여자' : '남자';
 
 
-    String murl = url + r.toString() + '.jpg';
+
+    getoppoUserCount(oppoGender); // get random num too
+
+    //getRandomHakbun(oppoGender, randomNum);
+
+    print('oppoGender is ' + oppoGender);
 
 
-    return Padding(
-        padding: EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          child: Container(
 
 
-            alignment: AlignmentDirectional.center,
+    print('hakbun = ' +oppoHakbun );
 
-            child: Center(
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-
-
-                  Padding(padding: EdgeInsets.all(10),),
-
-                  Container(
+    return Center(
+      child: Container(
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Padding(padding: EdgeInsets.all(37)),
+              Text('- 오늘의 랜덤매칭 -', style: TextStyle(fontSize: 18,color: const Color(0xFF696868))),
+              Padding(padding: EdgeInsets.all(5)),
+              Text('이분은 어떠신가요?',
+                  style: TextStyle(fontSize: 31,fontWeight: FontWeight.bold, color: const Color(0xFFfd9dbd))),
+              Text('상세정보를 눌러 상대에 대해 더 알아보세요 :)',
+                  style: TextStyle(fontSize: 14, color: Colors.grey)),
+              Padding(padding: EdgeInsets.all(5)),
+              SingleChildScrollView(
+                child: SizedBox(
+                  width: 310,
+                  height: 307,
+                  child: Card(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-
                       children: <Widget>[
-
-                        Text('마음에 드는 이성을 찾아보세요 !',
-                            style: TextStyle(fontSize: 20)),
-                        Padding(padding: EdgeInsets.all(8)),
+                        Padding(padding: EdgeInsets.all(12)),
                         SizedBox(
+                            width: 180,
+                            height: 180,
+                            child: StreamBuilder(
+                              stream: Firestore.instance.collection('profile').where('hakbun', isEqualTo: oppoHakbun).snapshots(),
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if(oppoHakbun == 'null') {
+//                                  while(oppoHakbun != 'null') {
+//                                    setState(() {
+//                                      getRandomHakbun(oppoGender, randomNum);
+//                                    });
+//
+//                                  }
+                                  return Center(child: CircularProgressIndicator(),);
+                                }
 
-                          width: 250,
-                          child: Card(
+                                var items = snapshot.data?.documents ?? [] ; //documnets is list
 
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                    width: 180,
-                                    height: 180,
-                                    child:  StreamBuilder(
 
-                            stream: Firestore.instance.collection('profile').where('hakbun', isEqualTo: widget.user.email.split('@')[0]).snapshots(),
+                                print(items.length);
+
+
+                                return
+                                  Image.network(
+                                    items[0]['photoURL'],
+                                    fit: BoxFit.cover,
+                                  ); //one of the List
+
+
+                              },
+                            )//Image.network(url)
+
+                        ),
+                        Padding(padding: EdgeInsets.all(5)),
+
+                        StreamBuilder(
+                            stream: Firestore.instance.collection('users').where('hakbun', isEqualTo: oppoHakbun).snapshots(),
                             builder: (BuildContext context, AsyncSnapshot snapshot) {
-                              if(!snapshot.hasData) {
+                              contexts = context;
+                              snapshots = snapshot;
+                              if (oppoHakbun == 'null') {
                                 return Center(child: CircularProgressIndicator(),);
                               }
-
-                              var items = snapshot.data?.documents ?? [] ; //documnets is list
-
+                              stuID = snapshot.data.documents[0]['hakbun'];
                               return
-                                Image.network(
-                                  items[0]['photoURL'],
-                                  fit: BoxFit.cover,
-                                ); //one of the List
-
-
-//        return GridView.builder(
-//            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                crossAxisCount: 5),
-//            itemCount: items.length,
-//            itemBuilder: (context, index){
-//              return _buildListItem(context, items[index]);
-//            } );
-                            },
-                          );//Image.network(url)
-
-                                ),
-                                Text('이름 : '),
-                                Text('학부 : Ghost'),
-                                Padding(padding: EdgeInsets.all(8)),
-                                Container(
-                                  child: Column(
-                                    children: <Widget> [
-                                        IconButton(icon: Icon(Icons.send,
-                                          size: 40,
-                                        ),
-                                          onPressed: () {
-                                          //sendM(context);
-
-
-                                          },
-                                        ),
-
-                                      Text('상세정보'),
-                                    ], //column widget
-                                  ),
-                                ),
-                              ],
-
-                            ),
+                                Column(
+                                  children: <Widget>[
+                                    Text(snapshot.data.documents[0]['name'], style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),),
+                                    Padding(padding: EdgeInsets.all(1)),
+                                    Text(snapshot.data.documents[0]['age'].toString()+' / '+ snapshot.data.documents[0]['hakbu'], style: TextStyle(fontSize: 14),),
+                                  ],
+                                );
+                              //one of the List
+                            }),
+                        /*Text('미노', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,),),
+                        Padding(padding: EdgeInsets.all(1)),
+                        Text('24'+' / '+'전산전자공학부', style: TextStyle(fontSize: 14),),*/
+                        Padding(padding: EdgeInsets.all(6)),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget> [
+                              RaisedButton(onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder:  (context) => detail(widget.user, oppoHakbun)));
+                              }, color: const Color(0xFFf9c8d9),
+                                child: Text('상세정보', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: const Color(0xFFffffff)),),
+                              ),
+                              Padding(padding: EdgeInsets.all(3)),
+                              RaisedButton(onPressed: (){
+                              }, color: const Color(0xFFf9c8d9),
+                                child: Text('좋아요', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: const Color(0xFFffffff)),),
+                              ),
+                            ], //column widget
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
-
-                  Container(
-
-                      child: Flexible(
-                          fit: FlexFit.loose,
-                          child: IconButton(icon: Icon(Icons.navigate_next, size: 60,),
-                            onPressed: () {
-                            clicked ++;
-                            buildBody();
-                            },),
-
-                      )
-
-                  ),
-
-                ],
-
+                ),
               ),
-            ),
-
-          ),
-
-        )
+              Container(
+                  child: Flexible(
+                    fit: FlexFit.loose,
+                    child: IconButton(icon: Icon(Icons.arrow_forward, size: 40,color: const Color(0xFFfd9dbd),),
+                      onPressed: () {
+                       setState(() {
+                         getRandomHakbun(oppoGender, randomNum);
+                       });
+                      },),
+                  )
+              ),
+              Text('다음', style: TextStyle(fontSize: 13, color: const Color(0xFFfd9dbd)),),
+            ]
+        ),
+      ),
     );
-
   }
 
 }
@@ -228,19 +287,19 @@ void sendM(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        TextField(
-          decoration: InputDecoration(
-            icon: Icon(Icons.send),
-            labelText: '마음을 표현해보세요',
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.send),
+              labelText: '마음을 표현해보세요',
+            ),
           ),
-        ),
-        IconButton(icon: Icon(Icons.send,
-          size: 40,
-        ),
-          onPressed: () {},
-        ),
-      ]
+          IconButton(icon: Icon(Icons.send,
+            size: 40,
+          ),
+            onPressed: () {},
+          ),
+        ]
     ),
   );
 
@@ -249,4 +308,3 @@ void sendM(BuildContext context){
   }
   );
 }
-

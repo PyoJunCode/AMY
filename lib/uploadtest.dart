@@ -18,12 +18,23 @@ class uploadtest extends StatefulWidget {
 }
 
 class _uploadtestState extends State<uploadtest> {
+
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('test'),),
-      floatingActionButton: FloatingActionButton(onPressed: () { Navigator.pushReplacement(
-          context, MaterialPageRoute(builder:  (context) => myInfoPage(widget.user)));}),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+
+        setState(() {
+          index++;
+        });
+
+        print('index : ' + index.toString());
+        _getImg();
+
+
+      }),
       body: buildBody(),
   );
 }
@@ -32,9 +43,15 @@ class _uploadtestState extends State<uploadtest> {
     return Center(
       child: SizedBox(
         width: 200,
-        height: 200,
-        child : _getImg(),
+        height: 400,
+        child : Column(children: <Widget>[
+         _getImg(),
+         Text('index' + index.toString())
+         ,
+
+        ],
       )
+    )
     );
   }
 
@@ -63,7 +80,7 @@ class _uploadtestState extends State<uploadtest> {
 
         return
           Image.network(
-          items[0]['photoURL'],
+          items[index]['photoURL'],
           fit: BoxFit.cover,
         ); //one of the List
 

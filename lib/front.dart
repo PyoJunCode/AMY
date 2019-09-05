@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/photo.dart';
 import 'package:flutter_app/signal.dart';
 import 'match.dart';
 import 'menuConsts.dart';
@@ -30,8 +31,8 @@ class _frontPageState extends State<frontPage> {
     super.initState();
     pages = [
       matchPage(widget.user),
-      TodoList(),
-      myInfoPage(widget.user),
+      signalPage(widget.user),
+      photoPage(widget.user),
 
     ];
   }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'auth.dart';
 import 'auth1.dart';
 import 'front.dart';
 import 'login.dart';
 
+//입장하기, 로그아웃 페이지
 
 class checkPage extends StatelessWidget {
 
@@ -20,43 +20,62 @@ class checkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        //backgroundColor: const Color(0xFFfcf3f6),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Welcome',style: TextStyle(fontSize: 30, color: Colors.white),)
+        title: Text('Welcome',style: TextStyle(fontSize: 20, color: Colors.grey),)
       ),
-      body: Padding(padding: EdgeInsets.all(50),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 300,
-              height: 100,
-              child: Card(
-                elevation: 4.0,
-                child: Padding(padding: EdgeInsets.all(8),
-                child: Row(
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.all(8)),
-                    SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(user.photoUrl),
+
+      /*
+      * Text('HMC', style: TextStyle(fontSize: 100,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xFFff76b9)),),
+            */
+
+      body: Padding(padding: EdgeInsets.all(63),
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text('안녕하세요', style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: const Color(0xFFfd9dbd)),),
+              Padding(padding: const EdgeInsets.all(3)),
+              Text('한만추에 오신 것을 환영합니다.', style: TextStyle(fontSize: 20, color: Colors.grey),),
+              Padding(padding: const EdgeInsets.all(12)),
+              SizedBox(
+                width: 230,
+                height: 230,
+                child: Card(
+                  elevation: 4.0,
+                  child: Padding(padding: EdgeInsets.all(8),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.all(20)),
+                      SizedBox(
+                        width: 90,
+                        height: 90,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(user.photoUrl),
+                        ),
                       ),
-                    ),
-                    Padding(padding: EdgeInsets.all(10),),
-                    Text(user.displayName+' 님'),
-                  ],
-                ),),
+                      Padding(padding: EdgeInsets.all(10),),
+                      Text(user.displayName+' 님',
+                      style: TextStyle(fontSize: 20)),
+                    ]
+                  ),
+                  ),
+                ),
               ),
-            ),
-            RaisedButton(onPressed: (){
+              Padding(padding: EdgeInsets.all(17),),
+              Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(onPressed: (){
 
-              checkAuth();
+                      checkAuth();
 
-              Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => frontPage(user)));
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => frontPage(user)));
 
 //              if(first == false) {
 //                Navigator.pushReplacement(context, MaterialPageRoute(
@@ -67,19 +86,23 @@ class checkPage extends StatelessWidget {
 //              }
 
 
-              }, color: const Color(0xFFffdbf8),
-               child: Text('입장하기'),
-            ),
-            RaisedButton(onPressed: () {
-              FirebaseAuth.instance.signOut();
-              googleSignIn.signOut();
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) => loginPage()));
+                    }, color: const Color(0xFFf9c8d9),
+                      child: Text('입장하기', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: const Color(0xFFffffff)),),
+                    ),
+                    Padding(padding: EdgeInsets.all(3)),
+                    RaisedButton(onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      googleSignIn.signOut();
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) => loginPage()));
 
-            },
-              color: const Color(0xFFffdbf8),
-              child: Text('로그아웃'),)
-          ],
+                    },
+                      color: const Color(0xFFf9c8d9),
+                      child: Text('로그아웃', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: const Color(0xFFffffff)),),)
+                  ]
+              ),
+            ],
+          ),
         ),
       ),)
     );
